@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cố lên bé iuu! 🎓✨</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 25%, #e8eaf6 50%, #e0f7fa 75%, #fff9c4 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* ===== Floating decorations ===== */
+  .decorations {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .float-item {
+    position: absolute;
+    font-size: 28px;
+    opacity: 0;
+    animation: floatUp linear infinite;
+  }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0; }
+    10%  { opacity: 0.8; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
+  }
+
+  /* ===== Main card ===== */
+  .card {
+    position: relative;
+    z-index: 10;
+    width: 90%;
+    max-width: 520px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 32px;
+    border: 2px solid rgba(255, 182, 193, 0.5);
+    box-shadow:
+      0 8px 32px rgba(233, 30, 99, 0.12),
+      0 2px 8px rgba(0,0,0,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.8);
+    padding: 40px 32px 36px;
+    text-align: center;
+    animation: cardAppear 1s cubic-bezier(.34,1.56,.64,1) both;
+  }
+
+  @keyframes cardAppear {
+    0% { transform: scale(0.3) translateY(60px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  /* ===== Mascot / Emoji header ===== */
+  .mascot {
+    font-size: 64px;
+    margin-bottom: 8px;
+    animation: bounce 2s ease-in-out infinite;
+    display: inline-block;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+
+  .title {
+    font-family: 'Pacifico', cursive;
+    font-size: 28px;
+    color: #e91e63;
+    margin-bottom: 6px;
+    text-shadow: 2px 2px 4px rgba(233, 30, 99, 0.15);
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: #ad1457;
+    margin-bottom: 28px;
+    font-weight: 600;
+  }
+
+  /* ===== Message carousel ===== */
+  .message-box {
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  .message {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #4a148c;
+    font-weight: 600;
+    padding: 0 8px;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.6s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  .message.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .message .heart-inline {
+    color: #e91e63;
+    animation: heartbeat 1.2s ease-in-out infinite;
+    display: inline-block;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.25); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+  }
+
+  /* ===== Progress section ===== */
+  .progress-section {
+    margin-bottom: 24px;
+  }
+
+  .progress-label {
+    font-size: 13px;
+    color: #7b1fa2;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .progress-bar-outer {
+    width: 100%;
+    height: 22px;
+    background: #fce4ec;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 2px solid #f8bbd0;
+    position: relative;
+  }
+
+  .progress-bar-inner {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #f48fb1, #e91e63, #ad1457);
+    border-radius: 22px;
+    transition: width 1.5s cubic-bezier(.34,1.56,.64,1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-bar-inner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .progress-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    z-index: 2;
+  }
+
+  /* ===== Motivation button ===== */
+  .motivate-btn {
+    background: linear-gradient(135deg, #ec407a, #ab47bc);
+    color: #fff;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(233, 30, 99, 0.35);
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .motivate-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(233, 30, 99, 0.5);
+  }
+
+  .motivate-btn:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  .motivate-btn .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    animation: rippleAnim 0.6s ease-out;
+    pointer-events: none;
+  }
+
+  @keyframes rippleAnim {
+    0% { width: 0; height: 0; opacity: 1; }
+    100% { width: 200px; height: 200px; opacity: 0; }
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #ce93d8;
+    font-weight: 600;
+  }
+
+  /* ===== Confetti ===== */
+  .confetti-piece {
+    position: fixed;
+    z-index: 100;
+    pointer-events: none;
+    animation: confettiFall linear forwards;
+  }
+
+  @keyframes confettiFall {
+    0%   { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ===== Sparkle burst on click ===== */
+  .sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99;
+    font-size: 20px;
+    animation: sparklePop 0.8s ease-out forwards;
+  }
+
+  @keyframes sparklePop {
+    0%   { transform: scale(0) translate(0, 0); opacity: 1; }
+    100% { transform: scale(1.5) translate(var(--tx), var(--ty)); opacity: 0; }
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 480px) {
+    .card { padding: 28px 20px 28px; }
+    .title { font-size: 22px; }
+    .message { font-size: 16px; }
+    .mascot { font-size: 50px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating background decorations -->
+<div class="decorations" id="decorations"></div>
+
+<!-- Main card -->
+<div class="card">
+  <div class="mascot" id="mascot">🐻</div>
+  <h1 class="title">Cố lên bé iuu!</h1>
+  <p class="subtitle">🎓 Đồ án tốt nghiệp 2025 🎓</p>
+
+  <div class="message-box">
+    <div class="message" id="message"></div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-label">Tiến độ hoàn thành</div>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progressBar"></div>
+      <div class="progress-text" id="progressText">0%</div>
+    </div>
+  </div>
+
+  <button class="motivate-btn" id="motivateBtn" onclick="nextMessage()">
+    ✨ Thêm động lực nào! ✨
+  </button>
+
+  <div class="footer">
+    Made with <span class="heart-inline">❤</span> dành riêng cho bé
+  </div>
+</div>
+
+<script>
+  // ===== Messages =====
+  const messages = [
+    "Bé iuu ơi, cố lên nhé! Đồ án rồi sẽ xong thôi <span class='heart-inline'>❤</span>",
+    "Mỗi dòng code, mỗi trang viết đều là bước tiến gần hơn đến ngày tốt nghiệp! 🌟",
+    "Anh tin vào bé nhất! Chỉ cần kiên trì một chút thôi 💪✨",
+    "Nghĩ đến khoảnh khắc mặc áo cử nhân là có động lực ngay đúng không? 🎓💐",
+    "Đừng stress quá nhé, khó khăn nào rồi cũng qua! Anh luôn ở đây 💕",
+    "Bé của anh giỏi lắm, chỉ cần bình tĩnh và làm từng bước một 🌸",
+    "Deadline không đáng sợ, vì bé là chiến binh mạnh mẽ nhất! ⚔️💖",
+    "Nghỉ ngơi một chút rồi tiếp tục nhé. Cơm nước đầy đủ rồi làm bài mới tốt! 🍜",
+    "Mỗi ngày hoàn thành một phần, tích tiểu thành đại! 🏆",
+    "Nhớ ăn uống đầy đủ, ngủ đủ giấc nhé. Sức khoẻ quan trọng nhất! 🌙",
+    "Sau này được đi làm, nhớ lại thời làm đồ án sẽ thấy thương lắm á 🥰",
+    "Bé biết không, nỗ lực của hôm nay là thành quả của ngày mai 🌈",
+    "Chỉ còn một đoạn đường ngắn nữa thôi, kiên trì lên em yêu! 🏃‍♀️💨",
+    "Bất cứ khi nào mệt mỏi, nhớ là luôn có anh ở bên nhé 🤗",
+    "Làm đồ án giỏi như nấu ăn ngon, em đều làm được hết! 👩‍🍳",
+    "Bình tĩnh tự tin, hít sâu thở dài, em làm được! 🧘‍♀️",
+    "Chậm mà chắc hơn nhanh mà lỗi. Cứ từ từ em nhé 🐢✨",
+    "Khoảnh khắc bảo vệ thành công sẽ là khoảnh khắc đáng nhớ nhất! 🎉🎊",
+    "Anh tự hào về sự nỗ lực của bé mỗi ngày 🥹❤️",
+    "Đừng so sánh với người khác, nhịp của em là nhịp của riêng em 🎵",
+    "Lâu lâu đứng lên vận động một chút, ngồi nhiều không tốt đâu! 🤸‍♀️",
+    "Cứ tưởng tượng ngày cầm bằng trên tay, cười thật tươi nha! 😄🎓",
+    "Em là người tuyệt vời nhất, đồ án nào cũng không làm khó được em! 💎",
+    "Chỉ cần không bỏ cuộc, em đã thắng rồi! ❤️🔥",
+    "Tối nay làm xong phần này, mai lại nhẹ nhõm. Cố lên! 🌅",
+    "Anh yêu sự kiên trì và chăm chỉ của bé lắm 🥰",
+    "Mỗi lần hoàn thành một chương là một chiến thắng nhỏ! 🏅",
+    "Gửi bé một cái ôm ảo thật chặt từ xa 🤗💕",
+    "Đồ án tốt nghiệp = Vé đến tương lai tươi sáng! 🎫✨",
+    "Bé ơi, sắp xong rồi đó! Cố lên chút xíu nữa thôi! 🎊🎉",
+  ];
+
+  let currentIndex = -1;
+  let progress = 0;
+
+  const messageEl = document.getElementById('message');
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const mascotEl = document.getElementById('mascot');
+
+  const mascots = ['🐻', '🐰', '🐱', '🐶', '🐼', '🦊', '🐨', '🐷', '🌸', '🎀', '⭐', '🦋'];
+
+  // ===== Show next message =====
+  function nextMessage() {
+    currentIndex = (currentIndex + 1) % messages.length;
+
+    // Hide current
+    messageEl.classList.remove('show');
+
+    setTimeout(() => {
+      messageEl.innerHTML = messages[currentIndex];
+      messageEl.classList.add('show');
+
+      // Update progress
+      progress = Math.min(100, Math.round(((currentIndex + 1) / messages.length) * 100));
+      progressBar.style.width = progress + '%';
+      progressText.textContent = progress + '%';
+
+      // Change mascot
+      mascotEl.textContent = mascots[currentIndex % mascots.length];
+
+      // Burst sparkles on button
+      createSparkles();
+
+      // At the last message, celebrate!
+      if (currentIndex === messages.length - 1) {
+        launchConfetti();
+      }
+    }, 300);
+  }
+
+  // ===== Floating decorations =====
+  function createDecorations() {
+    const container = document.getElementById('decorations');
+    const items = ['💕', '✨', '🌸', '💗', '🎀', '⭐', '💖', '🌟', '🦋', '💐', '☁️', '💜'];
+
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('div');
+      el.className = 'float-item';
+      el.textContent = items[i % items.length];
+      el.style.left = Math.random() * 100 + '%';
+      el.style.fontSize = (20 + Math.random() * 20) + 'px';
+      el.style.animationDuration = (8 + Math.random() * 10) + 's';
+      el.style.animationDelay = (Math.random() * 10) + 's';
+      container.appendChild(el);
+    }
+  }
+
+  // ===== Sparkle burst =====
+  function createSparkles() {
+    const btn = document.getElementById('motivateBtn');
+    const rect = btn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const sparkles = ['✨', '💖', '⭐', '💕', '🌟', '💗'];
+
+    for (let i = 0; i < 8; i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.textContent = sparkles[i % sparkles.length];
+      const angle = (Math.PI * 2 / 8) * i;
+      const dist = 40 + Math.random() * 40;
+      s.style.left = cx + 'px';
+      s.style.top = cy + 'px';
+      s.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+      s.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 800);
+    }
+  }
+
+  // ===== Confetti =====
+  function launchConfetti() {
+    const colors = ['#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#00bcd4', '#4caf50', '#ff9800', '#ff5722'];
+    for (let i = 0; i < 60; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.width = (6 + Math.random() * 8) + 'px';
+      c.style.height = (6 + Math.random() * 8) + 'px';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      c.style.animationDuration = (2 + Math.random() * 3) + 's';
+      c.style.animationDelay = Math.random() * 1.5 + 's';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 5000);
+    }
+  }
+
+  // ===== Button ripple effect =====
+  document.getElementById('motivateBtn').addEventListener('click', function(e) {
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    const rect = this.getBoundingClientRect();
+    ripple.style.left = (e.clientX - rect.left - 100) + 'px';
+    ripple.style.top = (e.clientY - rect.top - 100) + 'px';
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+
+  // ===== Init =====
+  createDecorations();
+
+  // Auto show first message
+  setTimeout(() => nextMessage(), 600);
+</script>
+</body>
+</html>
